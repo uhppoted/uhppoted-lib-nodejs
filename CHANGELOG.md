@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Updated
+1. Updated dependencies for security patches.
+
 
 ## [0.8.11](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.8.11) - 2025-07-01
 
