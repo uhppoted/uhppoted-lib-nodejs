@@ -16,11 +16,11 @@ ARGS       = bind=$(BIND) broadcast=$(BROADCAST) listen=$(LISTEN) timeout=$(TIME
 
 update:
 	npm update	
-	npm audit fix
+	npm audit fix --omit=dev
 
 update-release:
 	npm update	
-	npm audit fix
+	npm audit fix --omit=dev
 
 format:
 	npx prettier --write src/*.js
