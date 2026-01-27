@@ -19,11 +19,9 @@ npm install uhppoted
 
 #### Current Release
 
-**[v0.8.11](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.8.11) - 2025-07-01**
+**[v0.9.0](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-01-27**
 
-1. Added `get/set-antipassback` API function to manage the controller anti-passback mode.
-2. Added check to prevent UDP broadcast-to-self.
-3. Renamed _github_ repository to _uhppoted-lib-nodejs_.
+1. Updated dependencies for security patches.
 
 
 ### API

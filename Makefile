@@ -4,9 +4,9 @@ DOOR     ?= 3
 DEVICEIP ?= 192.168.1.125
 DATETIME  = $(shell date "+%Y-%m-%d %H:%M:%S")
 
-BIND      ?= 192.168.1.100
+BIND      ?= 192.168.1.125
 BROADCAST ?= 192.168.1.255:60000
-LISTEN    ?= 192.168.1.100:60001
+LISTEN    ?= 192.168.1.125:60001
 TIMEOUT   ?= 1000
 DEBUG     ?= true
 ARGS       = bind=$(BIND) broadcast=$(BROADCAST) listen=$(LISTEN) timeout=$(TIMEOUT) debug=$(DEBUG)
@@ -16,11 +16,11 @@ ARGS       = bind=$(BIND) broadcast=$(BROADCAST) listen=$(LISTEN) timeout=$(TIME
 
 update:
 	npm update	
-	npm audit fix --omit=dev
+# 	npm audit fix
 
 update-release:
 	npm update	
-	npm audit fix --omit=dev
+# 	npm audit fix
 
 format:
 	npx prettier --write src/*.js
@@ -40,7 +40,7 @@ test: build
 
 integration-tests: test
 	npx eslint --fix integration-tests/**/*.js  
-	npx mocha 'integration-tests/**/*_spec.js' --broadcast='192.168.1.255:59999' --listen='192.168.1.100:60001'
+	npx mocha 'integration-tests/**/*_spec.js' --broadcast='192.168.1.255:59999' --listen='192.168.1.125:60001'
 
 jsdoc: build
 	npx jsdoc src --destination jsdoc --package package.json --readme README.md

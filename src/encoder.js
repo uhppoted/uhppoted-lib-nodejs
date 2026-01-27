@@ -868,7 +868,7 @@ function datetime2bin(datetime) {
 
   for (const m of match.slice(1)) {
     const b = parseInt(m, 10)
-    const byte = ((b / 10) << 4) | b % 10
+    const byte = ((b / 10) << 4) | (b % 10)
     bytes.push(byte)
   }
 
@@ -891,7 +891,7 @@ function date2bin(date) {
 
   for (const m of match.slice(1)) {
     const b = parseInt(m, 10)
-    const byte = ((b / 10) << 4) | b % 10
+    const byte = ((b / 10) << 4) | (b % 10)
     bytes.push(byte)
   }
 
@@ -912,7 +912,7 @@ function HHmm2bin(hhmm) {
 
   for (const m of match.slice(1)) {
     const b = parseInt(m, 10)
-    const byte = ((b / 10) << 4) | b % 10
+    const byte = ((b / 10) << 4) | (b % 10)
     bytes.push(byte)
   }
 
