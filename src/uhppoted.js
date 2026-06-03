@@ -1170,6 +1170,75 @@ module.exports = {
   },
 
   /**
+   * Sets the first-card configuration for a controller managed door.
+   *
+   * @param {object}      ctx         Context with configuration, locale (optional) and logger (optional).
+   * @param {uint|object} controller  Either a controller serial number (legacy implementation) or an
+   *                                  object of the form { controller, address, protocol }:
+   * @param {uint}        controller.id        Controller serial number.
+   * @param {string}      controller.address   Optional controller IPv4 address. Defaults to UDP broadcast.
+   * @param {string}      controller.protocol  Optional connection protocol ('udp' or 'tcp'). Defaults to
+   *                                           'udp' unless 'tcp'.
+   * @param {uint}        door        Door ID ([1..4]).
+   *
+   * @param {object}      firstcard                First card configuration:
+   * @param {string}      firstcard.start_time     Time of day from which first-card mode can be activated (e.g. "08:30").
+   * @param {string}      firstcard.end_time       Time of day after which first-card mode is deactivated (e.g. "16:45").
+   * @param {string}      firstcard.active_mode    Door control mode after first-card swipe ("controlled", "normally open", or
+   *                                               "normally closed").
+   * @param {string}      firstcard.inactive_mode  Door control mode after first-card mode deactivated ("controlled", "normally open",
+   *                                               "normally closed" or "first-card only").
+   *
+   * @example
+   * uhppoted.setFirstCard(ctx, 405419896,
+   *                            3,
+   *                            { start_time: "08:30",
+   *                              end_time: "16:45",
+   *                              active_mode: "controlled",
+   *                              inactive_mode: "first-card only",
+   *                              weekdays: {
+   *                                 monday: true,
+   *                                 tuesday: true,
+   *                                 wednesday: false,
+   *                                 thursday: false,
+   *                                 friday: true,
+   *                                 saturday: false,
+   *                                 sunday: false,
+   *                              }
+   *                            })
+   *  .then(response => { console.log(response) })
+   *  .catch(err => { console.log(`${err.message}`)
+   *
+   * @example
+   * uhppoted.setFirstCard(ctx, { id:405419896, address:'192.168.1.100', protocol:'tcp'},
+   *                            3,
+   *                            { start_time: "08:30",
+   *                              end_time: "16:45",
+   *                              active_mode: "controlled",
+   *                              inactive_mode: "first-card only",
+   *                              weekdays: {
+   *                                 monday: true,
+   *                                 tuesday: true,
+   *                                 wednesday: false,
+   *                                 thursday: false,
+   *                                 friday: true,
+   *                                 saturday: false,
+   *                                 sunday: false,
+   *                              }
+   *                            })
+   *  .then(response => { console.log(response) })
+   *  .catch(err => { console.log(`${err.message}`)
+   */
+  setFirstCard: function (ctx, controller, door, firstcard) {
+    const { id, address: addr, protocol } = resolve(controller)
+
+    return validate({ controller: id }, ctx.locale)
+      .then(() => initialise(ctx))
+      .then((context) => get(context, id, opcodes.SetFirstCard, firstcard, addr, protocol))
+      .then((response) => translate(response, ctx.locale))
+  },
+
+  /**
    * Resets the controller configuration to the manufacturer default settings.
    *
    * @param {object}      ctx         Context with configuration, locale (optional) and logger (optional).

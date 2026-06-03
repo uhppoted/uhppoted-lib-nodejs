@@ -44,6 +44,10 @@ function InvalidTaskType(task, locale) {
   return new Error(translate(`{{invalid task type}} '${task}'`, locale))
 }
 
+function InvalidDoorControlMode(mode, locale) {
+  return new Error(translate(`{{invalid door control mode}} '${mode}'`, locale))
+}
+
 function NoReply(locale) {
   return new Error(translate('{{no reply}}', locale))
 }
@@ -85,6 +89,7 @@ module.exports = {
   InvalidDoorControl,
   InvalidPermission,
   InvalidTaskType,
+  InvalidDoorControlMode,
 
   NoReply,
   NoReplyFromDevice,

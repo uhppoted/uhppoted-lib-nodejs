@@ -60,7 +60,8 @@ publish-npm: release
 	npm publish
 
 debug: build
-	node examples/get-devices.js bind=$(BIND) broadcast=$(BROADCAST)
+# 	node examples/get-devices.js bind=$(BIND) broadcast=$(BROADCAST)
+	npx mocha test/encoder_spec.js
 
 error-handling: build
 	node examples/error-handling.js $(ARGS)

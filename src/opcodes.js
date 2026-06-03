@@ -28,6 +28,7 @@ module.exports = {
   ActivateKeypads: 0xa4,
   ClearTaskList: 0xa6,
   AddTask: 0xa8,
+  SetFirstCard: 0xaa,
   RefreshTaskList: 0xac,
 
   GetEventIndex: 0xb4,
@@ -42,4 +43,5 @@ module.exports = {
   NormallyOpen: 0x01,
   NormallyClosed: 0x02,
   Controlled: 0x03,
+  FirstCardOnly: 0x04,
 }

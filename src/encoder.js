@@ -698,7 +698,7 @@ module.exports = {
    * @param {number} deviceId  Controller serial number
    * @param {number} interlock Interlock mode (0,1,2,3,4 or 8)
    *
-   * @return {buffer} 64 byte NodeJS buffer with encoded set-pc-control request.
+   * @return {buffer} 64 byte NodeJS buffer with encoded set-interlock request.
    */
   SetInterlock: function (deviceId, { interlock } = {}) {
     const request = Buffer.alloc(64)
@@ -723,7 +723,7 @@ module.exports = {
    *                              4: true/false
    *                           }
    *
-   * @return {buffer} 64 byte NodeJS buffer with encoded set-pc-control request.
+   * @return {buffer} 64 byte NodeJS buffer with encoded activate-keypads request.
    */
   ActivateKeypads: function (controller, { keypads } = {}) {
     const request = Buffer.alloc(64)
@@ -748,7 +748,7 @@ module.exports = {
    * @param {object} passcodes Array of up to 4 passcodes in the range [0..999999]
    *                           (0 corresponds to 'no code')
    *
-   * @return {buffer} 64 byte NodeJS buffer with encoded set-pc-control request.
+   * @return {buffer} 64 byte NodeJS buffer with encoded set-door-passcodes request.
    */
   SetDoorPasscodes: function (controller, { door, passcodes } = {}) {
     const request = Buffer.alloc(64)
@@ -774,11 +774,11 @@ module.exports = {
   },
 
   /**
-   * Get anti-passback mode request.
+   * Encodes a get-antipassback request.
    *
    * @param {number} controller Controller serial number
    *
-   * @return {buffer} 64 byte NodeJS buffer with encoded restore-default-parameters request.
+   * @return {buffer} 64 byte NodeJS buffer with encoded get-antipassback request.
    */
   GetAntiPassback: function (controller) {
     const request = Buffer.alloc(64)
@@ -791,7 +791,7 @@ module.exports = {
   },
 
   /**
-   * Set anti-passback mode request.
+   * Encodes a set-antipassback request.
    *
    * @param {number} controller Controller serial number
    * @param {number} antipassback Anti-passback mode:
@@ -801,7 +801,7 @@ module.exports = {
    *                 - 3: 1:(2,3)
    *                 - 4: 1:(2,3,4)
    *
-   * @return {buffer} 64 byte NodeJS buffer with encoded restore-default-parameters request.
+   * @return {buffer} 64 byte NodeJS buffer with encoded set-antipassback request.
    */
   SetAntiPassback: function (controller, { antipassback }) {
     const request = Buffer.alloc(64)
@@ -810,6 +810,67 @@ module.exports = {
     request.writeUInt8(opcodes.SetAntiPassback, 1)
     request.writeUInt32LE(controller, 4)
     request.writeUInt8(antipassback, 8)
+
+    return request
+  },
+
+  /**
+   * Encodes a set-firstcard request.
+   *
+   * @param {number}    controller     Controller serial number.
+   * @param {number}    door           Door ID ([1..4]).
+   * @param {date}      start_time     Time (HH:mm) from which first-card can be activated.
+   * @param {date}      end_date       Time (HH:mm) after which first-card is no longer active.
+   * @param {mode}      active_mode    Door control mode after first-card swipe.
+   * @param {mode}      inactive_mode  Door control mode when first-card is not active.
+   * @param {weekdays}  weekdays       List of weekdays on which first-card can be activated.
+   *
+   * @return {buffer} 64 byte NodeJS buffer with encoded set-firstcard request.
+   */
+  SetFirstCard: function (controller, door, { start_time, end_time, active_mode, inactive_mode, weekdays }) {
+    const request = Buffer.alloc(64)
+
+    const modes = {
+      [opcodes.Controlled]: 0,
+      [opcodes.NormallyOpen]: 1,
+      [opcodes.NormallyClosed]: 2,
+      [opcodes.FirstCardOnly]: 3,
+    }
+
+    if (!(active_mode in modes) || active_mode === opcodes.FirstCardOnly) {
+      throw errors.InvalidDoorControlMode(active_mode)
+    }
+
+    if (!(inactive_mode in modes)) {
+      throw errors.InvalidDoorControlMode(inactive_mode)
+    }
+
+    const monday = weekdays.monday ? 1 : 0
+    const tuesday = weekdays.tuesday ? 1 : 0
+    const wednesday = weekdays.wednesday ? 1 : 0
+    const thursday = weekdays.thursday ? 1 : 0
+    const friday = weekdays.friday ? 1 : 0
+    const saturday = weekdays.saturday ? 1 : 0
+    const sunday = weekdays.sunday ? 1 : 0
+
+    request.writeUInt8(0x17, 0)
+    request.writeUInt8(opcodes.SetFirstCard, 1)
+    request.writeUInt32LE(controller, 4)
+    request.writeUInt8(door, 8)
+
+    HHmm2bin(start_time).copy(request, 9)
+    request.writeUInt8(modes[active_mode], 11)
+
+    HHmm2bin(end_time).copy(request, 12)
+    request.writeUInt8(modes[inactive_mode], 14)
+
+    request.writeUInt8(monday, 15)
+    request.writeUInt8(tuesday, 16)
+    request.writeUInt8(wednesday, 17)
+    request.writeUInt8(thursday, 18)
+    request.writeUInt8(friday, 19)
+    request.writeUInt8(saturday, 20)
+    request.writeUInt8(sunday, 21)
 
     return request
   },

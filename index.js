@@ -42,6 +42,7 @@ module.exports = {
 
   getAntiPassback: require('./src/uhppoted.js').getAntiPassback,
   setAntiPassback: require('./src/uhppoted.js').setAntiPassback,
+  setFirstCard: require('./src/uhppoted.js').setFirstCard,
 
   restoreDefaultParameters: require('./src/uhppoted.js').restoreDefaultParameters,
 

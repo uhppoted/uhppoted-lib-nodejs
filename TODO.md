@@ -1,10 +1,12 @@
 # TODO
 
-- [x] anti-passback (cf. https://github.com/uhppoted/uhppoted/issues/60)
-
-- [x] check UDP bind port is not 60000 (cf. https://github.com/uhppoted/uhppoted/issues/59)
-   - [x] fail with error
-   - [x] CHANGELOG
+- [ ] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
+      - [ ] API
+      - [ ] internationalisation
+      - [ ] lookup door modes
+      - [ ] documentation
+      - [ ] CHANGELOG
+      - [ ] README
 
 ## TODO
 1. Device by name

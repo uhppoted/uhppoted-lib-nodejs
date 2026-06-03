@@ -75,6 +75,7 @@ const map = new Map([
   ['invalid door control', 'invalidDoorControl'],
   ['invalid time profile for door', 'invalidPermission'],
   ['invalid task type', 'invalidTaskType'],
+  ['invalid door control mode', 'invalidDoorControlMode'],
   ['no reply from', 'noReply'],
   ['no reply to broadcasted request', 'noBroadcastReply'],
   ['invalid reply to broadcasted request', 'invalidBroadcastReply'],
