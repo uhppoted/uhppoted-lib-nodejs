@@ -134,6 +134,12 @@ function validate(args, locale) {
             reject(errors.InvalidCardPIN(v, locale))
           }
           break
+
+        case 'firstcard':
+          if (!isValidFirstCard(v)) {
+            reject(errors.InvalidFirstCard(v, locale))
+          }
+          break
       }
     })
 
@@ -204,6 +210,18 @@ function isValidTaskType(task) {
   }
 
   return inRange(task, 1, 13)
+}
+
+function isValidFirstCard(firstcard) {
+  if (!['controlled', 'normally open', 'normally closed'].includes(firstcard.active_mode)) {
+    return false
+  }
+
+  if (!['controlled', 'normally open', 'normally closed', 'firstcard only'].includes(firstcard.inactive_mode)) {
+    return false
+  }
+
+  return true
 }
 
 function inRange(value, min, max) {

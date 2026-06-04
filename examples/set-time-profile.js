@@ -2,7 +2,7 @@ const uhppoted = require('uhppoted')
 const ctx = require('./common.js')
 
 const deviceID = 405419896
-const addr = '192.168.1.100'
+const addr = '192.168.1.125'
 const profile = {
   id: 29,
   valid: { from: '2021-01-01', to: '2021-12-31' },

@@ -2,8 +2,8 @@ const uhppoted = require('uhppoted')
 const ctx = require('./common.js')
 
 const deviceID = 405419896
-const host = '192.168.1.100'
-const addr = { address: '192.168.1.100', port: 60000 }
+const host = '192.168.1.125'
+const addr = { address: '192.168.1.125', port: 60000 }
 
 async function run() {
   await uhppoted

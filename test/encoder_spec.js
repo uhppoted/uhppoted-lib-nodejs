@@ -92,8 +92,8 @@ describe('encoder', function () {
 
   it('should encode set-firstcard request', function () {
     const controller = 405419896
-    const door = 3
     const firstcard = {
+      door: 3,
       start_time: '08:30',
       end_time: '17:45',
       active_mode: opcodes.NormallyOpen,
@@ -117,7 +117,7 @@ describe('encoder', function () {
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     ])
 
-    const request = encoder.SetFirstCard(controller, door, firstcard)
+    const request = encoder.SetFirstCard(controller, firstcard)
 
     expect(request).to.deep.equal(expected)
   })

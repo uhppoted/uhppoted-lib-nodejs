@@ -827,8 +827,14 @@ module.exports = {
    *
    * @return {buffer} 64 byte NodeJS buffer with encoded set-firstcard request.
    */
-  SetFirstCard: function (controller, door, { start_time, end_time, active_mode, inactive_mode, weekdays }) {
-    const request = Buffer.alloc(64)
+  // SetFirstCard: function (controller, door, { start_time, end_time, active_mode, inactive_mode, weekdays }) {
+  SetFirstCard: function (controller, firstcard) {
+    const door = firstcard.door
+    const start_time = firstcard.start_time
+    const end_time = firstcard.end_time
+    const active_mode = firstcard.active_mode
+    const inactive_mode = firstcard.inactive_mode
+    const weekdays = firstcard.weekdays
 
     const modes = {
       [opcodes.Controlled]: 0,
@@ -852,6 +858,8 @@ module.exports = {
     const friday = weekdays.friday ? 1 : 0
     const saturday = weekdays.saturday ? 1 : 0
     const sunday = weekdays.sunday ? 1 : 0
+
+    const request = Buffer.alloc(64)
 
     request.writeUInt8(0x17, 0)
     request.writeUInt8(opcodes.SetFirstCard, 1)

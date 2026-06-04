@@ -4,7 +4,7 @@ const uhppoted = require('uhppoted')
 const controllers = [
   {
     deviceId: 201020304,
-    address: '192.168.1.100:59999',
+    address: '192.168.1.125:59999',
     forceBroadcast: true,
   },
 ]

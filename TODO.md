@@ -1,12 +1,14 @@
 # TODO
 
 - [ ] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
-      - [ ] API
+      - [x] API
+      - [x] example
+      - [x] integration tests
       - [ ] internationalisation
-      - [ ] lookup door modes
-      - [ ] documentation
-      - [ ] CHANGELOG
-      - [ ] README
+         - [ ] lookup door modes
+      - [x] jsdoc
+      - [x] CHANGELOG
+      - [x] README
 
 ## TODO
 1. Device by name

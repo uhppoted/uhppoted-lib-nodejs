@@ -61,7 +61,8 @@ publish-npm: release
 
 debug: build
 # 	node examples/get-devices.js bind=$(BIND) broadcast=$(BROADCAST)
-	npx mocha test/encoder_spec.js
+# 	npx mocha test/set-firstcard_spec.js
+	npx mocha 'integration-tests/set-firstcard_spec.js' --broadcast='192.168.1.255:59999' --listen='192.168.1.125:60001'
 
 error-handling: build
 	node examples/error-handling.js $(ARGS)
@@ -197,6 +198,9 @@ get-antipassback: build
 set-antipassback: build
 	node examples/set-antipassback.js $(ARGS)
 
+set-firstcard: build
+	node examples/set-firstcard.js $(ARGS)
+
 restore-default-parameters: build
 	node examples/restore-default-parameters.js $(ARGS)
 
@@ -241,6 +245,9 @@ run-all: build
 	@node examples/set-interlock.js $(ARGS)
 	@node examples/activate-keypads.js $(ARGS)
 	@node examples/set-door-passcodes.js $(ARGS)
+	@node examples/get-antipassback.js $(ARGS)
+	@node examples/set-antipassback.js $(ARGS)
+	@node examples/set-firstcard.js $(ARGS)
 	@node examples/restore-default-parameters.js $(ARGS)
 	@node examples/error-handling.js $(ARGS)
 	@node examples/error-handling-with-locale.js $(ARGS)

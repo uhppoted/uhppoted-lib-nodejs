@@ -2,7 +2,7 @@ const uhppoted = require('uhppoted')
 const ctx = require('./common.js')
 
 const deviceID = 405419896
-const addr = '192.168.1.100'
+const addr = '192.168.1.125'
 const cardNumber = '8165538'
 const validFrom = '2023-01-01'
 const validUntil = '2023-12-31'

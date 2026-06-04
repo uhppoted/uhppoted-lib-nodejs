@@ -1170,7 +1170,8 @@ module.exports = {
   },
 
   /**
-   * Sets the first-card configuration for a controller managed door.
+   * Sets the first-card configuration for a controller managed door. The first-card configuration for a door
+   * is 'pending' until activated by a refresh-tasklist command.
    *
    * @param {object}      ctx         Context with configuration, locale (optional) and logger (optional).
    * @param {uint|object} controller  Either a controller serial number (legacy implementation) or an
@@ -1187,7 +1188,7 @@ module.exports = {
    * @param {string}      firstcard.active_mode    Door control mode after first-card swipe ("controlled", "normally open", or
    *                                               "normally closed").
    * @param {string}      firstcard.inactive_mode  Door control mode after first-card mode deactivated ("controlled", "normally open",
-   *                                               "normally closed" or "first-card only").
+   *                                               "normally closed" or "firstcard only").
    *
    * @example
    * uhppoted.setFirstCard(ctx, 405419896,
@@ -1195,7 +1196,7 @@ module.exports = {
    *                            { start_time: "08:30",
    *                              end_time: "16:45",
    *                              active_mode: "controlled",
-   *                              inactive_mode: "first-card only",
+   *                              inactive_mode: "firstcard only",
    *                              weekdays: {
    *                                 monday: true,
    *                                 tuesday: true,
@@ -1212,19 +1213,11 @@ module.exports = {
    * @example
    * uhppoted.setFirstCard(ctx, { id:405419896, address:'192.168.1.100', protocol:'tcp'},
    *                            3,
-   *                            { start_time: "08:30",
-   *                              end_time: "16:45",
-   *                              active_mode: "controlled",
-   *                              inactive_mode: "first-card only",
-   *                              weekdays: {
-   *                                 monday: true,
-   *                                 tuesday: true,
-   *                                 wednesday: false,
-   *                                 thursday: false,
-   *                                 friday: true,
-   *                                 saturday: false,
-   *                                 sunday: false,
-   *                              }
+   *                            { start_time: '08:30',
+   *                              end_time: '16:45',
+   *                              active_mode: 'controlled',
+   *                              inactive_mode: 'firstcard only',
+   *                              weekdays: ['Monday', 'Tuesday', 'Friday']
    *                            })
    *  .then(response => { console.log(response) })
    *  .catch(err => { console.log(`${err.message}`)
@@ -1232,9 +1225,48 @@ module.exports = {
   setFirstCard: function (ctx, controller, door, firstcard) {
     const { id, address: addr, protocol } = resolve(controller)
 
-    return validate({ controller: id }, ctx.locale)
+    const modes = {
+      ['controlled']: opcodes.Controlled,
+      ['normally open']: opcodes.NormallyOpen,
+      ['normally closed']: opcodes.NormallyClosed,
+      ['firstcard only']: opcodes.FirstCardOnly,
+    }
+
+    const weekday = (abbreviation) => {
+      return (firstcard.weekdays ?? []).some((day) => day.trim().toLowerCase().startsWith(abbreviation))
+    }
+
+    const active_mode = modes[firstcard.active_mode]
+    const inactive_mode = modes[firstcard.inactive_mode]
+    const weekdays = {
+      monday: weekday('mon'),
+      tuesday: weekday('tue'),
+      wednesday: weekday('wed'),
+      thursday: weekday('thu'),
+      friday: weekday('fri'),
+      saturday: weekday('sat'),
+      sunday: weekday('sun'),
+    }
+
+    return validate({ controller: id, firstcard: firstcard }, ctx.locale)
       .then(() => initialise(ctx))
-      .then((context) => get(context, id, opcodes.SetFirstCard, firstcard, addr, protocol))
+      .then((context) => {
+        return get(
+          context,
+          id,
+          opcodes.SetFirstCard,
+          {
+            door: door,
+            start_time: firstcard.start_time,
+            end_time: firstcard.end_time,
+            active_mode: active_mode,
+            inactive_mode: inactive_mode,
+            weekdays: weekdays,
+          },
+          addr,
+          protocol,
+        )
+      })
       .then((response) => translate(response, ctx.locale))
   },
 

@@ -13,7 +13,7 @@ const ctx2 = {
     [
       {
         deviceId: 201020304,
-        address: '192.168.1.100:60000',
+        address: '192.168.1.125:60000',
         forceBroadcast: true,
       },
     ],

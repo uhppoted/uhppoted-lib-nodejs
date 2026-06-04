@@ -60,6 +60,7 @@ npm install uhppoted
 - [`setDoorPasscodes`](#setdoorpasscodes) sets door supervisor passcodes
 - [`getAntiPassback`](#getantipassback) gets the controller anti-passback mode
 - [`setAntiPassback`](#setantipassback) sets the controller anti-passback mode
+- [`setFirstCard`](#setfirstcard) sets the first-card configuration for a controller managed door
 - [`restoreDefaultParameters`](#restoreDefaultParameters) resets the controller configuration to the manufacturer default settings
 - [`listen`](#listen) establishes a listening connection for controller events
 
@@ -902,11 +903,36 @@ the following modes:
 
 
 ```
-uhppoted.setAntiPassback (ctx, controller,2)
+uhppoted.setAntiPassback (ctx, controller, 2)
 ```
-- `deviceId`:  serial number of controller
+- `controller`:  serial number of controller
 - `antipassback`:  anti-passback mode (0,1,2,3 or 4)
 
+Returns an `ok` result object, e.g.:
+```
+{ deviceId: 405419896, ok: true }
+```
+
+
+#### `setFirstCard`
+
+Sets the first-card configuration for a controller managed door. First-card mode allows a door to e.g. remain locked until a supervisor has swiped their card.
+
+```
+uhppoted.setFirstCard (ctx, controller, door, firstcard)
+```
+- `controller`:  serial number of controller
+- `door`:        door ID [1..4]
+- `firstcard`:   first-card configuration record
+```
+{
+  start_time:    '08:30',            // time of day from which first-card mode can be activated
+  end_time:      '16:45',            // time of day after which first-card mode is deactivated
+  active_mode:   'normally open',    // door control mode after first-card swipe ('normally open', 'normally closed', 'controlled')
+  inactive_mode: 'firstcard only',   // door control mode after first-card mode deactivated ('normally open', 'normally closed', 'controlled', 'firstcard only')
+  weekdays:      ['monday','tuesday','friday']  // days of week on which first-card mode is enabled
+}
+```
 Returns an `ok` result object, e.g.:
 ```
 { deviceId: 405419896, ok: true }

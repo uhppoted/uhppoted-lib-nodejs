@@ -48,6 +48,18 @@ function InvalidDoorControlMode(mode, locale) {
   return new Error(translate(`{{invalid door control mode}} '${mode}'`, locale))
 }
 
+function InvalidFirstCard(firstcard, locale) {
+  if (!['controlled', 'normally open', 'normally closed'].includes(firstcard.active_mode)) {
+    return new Error(translate(`{{invalid firstcard active-mode}} (${firstcard.active_mode})`, locale))
+  }
+
+  if (!['controlled', 'normally open', 'normally closed', 'firstcard only'].includes(firstcard.inactive_mode)) {
+    return new Error(translate(`{{invalid firstcard inactive-mode}} (${firstcard.inactive_mode})`, locale))
+  }
+
+  return new Error(translate(`{{invalid firstcard}} (${firstcard})`, locale))
+}
+
 function NoReply(locale) {
   return new Error(translate('{{no reply}}', locale))
 }
@@ -90,6 +102,7 @@ module.exports = {
   InvalidPermission,
   InvalidTaskType,
   InvalidDoorControlMode,
+  InvalidFirstCard,
 
   NoReply,
   NoReplyFromDevice,

@@ -2,7 +2,7 @@ const uhppoted = require('uhppoted')
 const ctx = require('./common.js')
 
 const deviceID = 405419896
-const addr = '192.168.1.100'
+const addr = '192.168.1.125'
 const keypads = {
   1: true,
   2: true,
