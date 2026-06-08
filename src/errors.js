@@ -1,4 +1,5 @@
 const translate = require('./internationalisation.js').translate
+const opcodes = require('./opcodes.js')
 
 function InvalidDeviceID(deviceId, locale) {
   return new Error(translate(`{{invalid controller ID}} '${deviceId}'`, locale))
@@ -49,12 +50,50 @@ function InvalidDoorControlMode(mode, locale) {
 }
 
 function InvalidFirstCard(firstcard, locale) {
-  if (!['controlled', 'normally open', 'normally closed'].includes(firstcard.active_mode)) {
-    return new Error(translate(`{{invalid firstcard active-mode}} (${firstcard.active_mode})`, locale))
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed].includes(firstcard.active_mode)) {
+    const mode = () => {
+      switch (firstcard.active_mode) {
+        case opcodes.NormallyOpen:
+          return '{{normally open}}'
+
+        case opcodes.NormallyClosed:
+          return '{{normally closed}}'
+
+        case opcodes.Controlled:
+          return '{{controlled}}'
+
+        case opcodes.FirstCardOnly:
+          return '{{first-card only}}'
+
+        default:
+          return `${firstcard.active_mode}`
+      }
+    }
+
+    return new Error(translate(`{{invalid firstcard active-mode}} (${mode()})`, locale))
   }
 
-  if (!['controlled', 'normally open', 'normally closed', 'firstcard only'].includes(firstcard.inactive_mode)) {
-    return new Error(translate(`{{invalid firstcard inactive-mode}} (${firstcard.inactive_mode})`, locale))
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed, opcodes.FirstCardOnly].includes(firstcard.inactive_mode)) {
+    const mode = () => {
+      switch (firstcard.active_mode) {
+        case opcodes.NormallyOpen:
+          return '{{normally open}}'
+
+        case opcodes.NormallyClosed:
+          return '{{normally closed}}'
+
+        case opcodes.Controlled:
+          return '{{controlled}}'
+
+        case opcodes.FirstCardOnly:
+          return '{{first-card only}}'
+
+        default:
+          return `${firstcard.active_mode}`
+      }
+    }
+
+    return new Error(translate(`{{invalid firstcard inactive-mode}} (${mode()})`, locale))
   }
 
   return new Error(translate(`{{invalid firstcard}} (${firstcard})`, locale))

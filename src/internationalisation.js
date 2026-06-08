@@ -12,6 +12,12 @@ const enUS = require('./locales/en-US/en-US.js')
 const map = new Map([
   ['unknown', 'unknown'],
 
+  // doors
+  ['normally open', 'normallyOpen'],
+  ['normally closed', 'normallyClosed'],
+  ['controlled', 'controlled'],
+  ['first-card only', 'firstcardOnly'],
+
   // event type
   ['none', 'eventNone'],
   ['card swipe', 'eventSwipe'],
@@ -58,11 +64,6 @@ const map = new Map([
   ['remote open door', 'remoteOpenDoor'],
   ['remote open door (USB reader)', 'usbOpenDoor'],
   ['(reserved)', 'reserved'],
-
-  // doors
-  ['normally open', 'normallyOpen'],
-  ['normally closed', 'normallyClosed'],
-  ['controlled', 'controlled'],
 
   // errors
   ['invalid controller ID', 'invalidDeviceID'],

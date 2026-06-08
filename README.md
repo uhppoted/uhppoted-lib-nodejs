@@ -929,7 +929,7 @@ uhppoted.setFirstCard (ctx, controller, door, firstcard)
   start_time:    '08:30',            // time of day from which first-card mode can be activated
   end_time:      '16:45',            // time of day after which first-card mode is deactivated
   active_mode:   'normally open',    // door control mode after first-card swipe ('normally open', 'normally closed', 'controlled')
-  inactive_mode: 'firstcard only',   // door control mode after first-card mode deactivated ('normally open', 'normally closed', 'controlled', 'firstcard only')
+  inactive_mode: 'firstcard only',   // door control mode after first-card mode deactivated ('normally open', 'normally closed', 'controlled', 'first-card only')
   weekdays:      ['monday','tuesday','friday']  // days of week on which first-card mode is enabled
 }
 ```

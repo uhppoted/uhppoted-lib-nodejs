@@ -1,6 +1,7 @@
 const config = require('./config.js')
 const errors = require('./errors.js')
 const log = require('./logger.js')
+const opcodes = require('./opcodes.js')
 
 function initialise(ctx) {
   return new Promise((resolve) => {
@@ -213,11 +214,11 @@ function isValidTaskType(task) {
 }
 
 function isValidFirstCard(firstcard) {
-  if (!['controlled', 'normally open', 'normally closed'].includes(firstcard.active_mode)) {
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed].includes(firstcard.active_mode)) {
     return false
   }
 
-  if (!['controlled', 'normally open', 'normally closed', 'firstcard only'].includes(firstcard.inactive_mode)) {
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed, opcodes.FirstCardOnly].includes(firstcard.inactive_mode)) {
     return false
   }
 

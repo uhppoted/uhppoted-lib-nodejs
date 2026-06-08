@@ -49,12 +49,41 @@ describe('#setFirstCard(...)', function () {
       start_time: '08:30',
       end_time: '17:45',
       active_mode: 'normally open',
-      inactive_mode: 'firstcard only',
+      inactive_mode: 'first-card only',
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 
     uhppoted
       .setFirstCard(ctx, 405419896, door, firstcard)
+      .then((response) => {
+        expect(response).to.deep.equal(expected)
+        done()
+      })
+      .catch((err) => done(err))
+  })
+
+  it('should execute set-firstcard in klingon', function (done) {
+    const context = {
+      config: ctx.config,
+      locale: 'klingon',
+    }
+
+    const expected = {
+      deviceId: 405419896,
+      ok: true,
+    }
+
+    const door = 3
+    const firstcard = {
+      start_time: '08:30',
+      end_time: '17:45',
+      active_mode: 'roD poS',
+      inactive_mode: "wa'DIch chaw' neH",
+      weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
+    }
+
+    uhppoted
+      .setFirstCard(context, 405419896, door, firstcard)
       .then((response) => {
         expect(response).to.deep.equal(expected)
         done()
@@ -91,7 +120,7 @@ describe('#setFirstCard(...) (TCP)', function () {
       start_time: '08:30',
       end_time: '17:45',
       active_mode: 'normally open',
-      inactive_mode: 'firstcard only',
+      inactive_mode: 'first-card only',
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 
@@ -116,7 +145,7 @@ describe('#setFirstCard(...) (TCP)', function () {
       start_time: '08:30',
       end_time: '17:45',
       active_mode: 'normally open',
-      inactive_mode: 'firstcard only',
+      inactive_mode: 'first-card only',
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 

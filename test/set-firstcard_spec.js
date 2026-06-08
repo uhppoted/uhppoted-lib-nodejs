@@ -13,7 +13,7 @@ describe('set-firstcard', function () {
         start_time: '08:30',
         end_time: '17:45',
         active_mode: 'normally open',
-        inactive_mode: 'firstcard only',
+        inactive_mode: 'first-card only',
         weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
       }
 
@@ -34,7 +34,7 @@ describe('set-firstcard', function () {
         start_time: '08:30',
         end_time: '17:45',
         active_mode: 'normally open',
-        inactive_mode: 'firstcard only',
+        inactive_mode: 'first-card only',
         weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
       }
 
@@ -54,8 +54,8 @@ describe('set-firstcard', function () {
       const firstcard = {
         start_time: '08:30',
         end_time: '17:45',
-        active_mode: 'firstcard only',
-        inactive_mode: 'firstcard only',
+        active_mode: 'first-card only',
+        inactive_mode: 'first-card only',
         weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
       }
 
@@ -65,7 +65,7 @@ describe('set-firstcard', function () {
           assert.fail()
         })
         .catch((err) => {
-          expect(err.message).to.equal('invalid firstcard active-mode (firstcard only)')
+          expect(err.message).to.equal('invalid firstcard active-mode (first-card only)')
         })
     })
   })

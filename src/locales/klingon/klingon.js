@@ -1,6 +1,12 @@
 const dict = new Map([
   ['unknown', 'Sov'],
 
+  // doors
+  ['controlled', 'SeH'],
+  ['normallyOpen', 'roD poS'],
+  ['normallyClosed', 'motlh SoQ'],
+  ['firstcardOnly', "wa'DIch chaw' neH"],
+
   // event type
   ['eventNone', 'pagh'],
   ['eventSwipe', 'chevjaq'],
@@ -47,11 +53,6 @@ const dict = new Map([
   ['remoteOpenDoor', 'lojmIt'],
   ['usbOpenDoor', "tu'lu'"],
   ['reserved', "tu'lu'"],
-
-  // doors
-  ['normallyOpen', 'motlh'],
-  ['normallyClosed', "jajlo'"],
-  ['controlled', 'ngeD'],
 
   // errors
   ['invalidDeviceID', 'jItoj'],

@@ -1188,7 +1188,7 @@ module.exports = {
    * @param {string}      firstcard.active_mode    Door control mode after first-card swipe ("controlled", "normally open", or
    *                                               "normally closed").
    * @param {string}      firstcard.inactive_mode  Door control mode after first-card mode deactivated ("controlled", "normally open",
-   *                                               "normally closed" or "firstcard only").
+   *                                               "normally closed" or "first-card only").
    *
    * @example
    * uhppoted.setFirstCard(ctx, 405419896,
@@ -1196,7 +1196,7 @@ module.exports = {
    *                            { start_time: "08:30",
    *                              end_time: "16:45",
    *                              active_mode: "controlled",
-   *                              inactive_mode: "firstcard only",
+   *                              inactive_mode: "first-card only",
    *                              weekdays: {
    *                                 monday: true,
    *                                 tuesday: true,
@@ -1216,7 +1216,7 @@ module.exports = {
    *                            { start_time: '08:30',
    *                              end_time: '16:45',
    *                              active_mode: 'controlled',
-   *                              inactive_mode: 'firstcard only',
+   *                              inactive_mode: 'firstc-ard only',
    *                              weekdays: ['Monday', 'Tuesday', 'Friday']
    *                            })
    *  .then(response => { console.log(response) })
@@ -1229,7 +1229,14 @@ module.exports = {
       ['controlled']: opcodes.Controlled,
       ['normally open']: opcodes.NormallyOpen,
       ['normally closed']: opcodes.NormallyClosed,
-      ['firstcard only']: opcodes.FirstCardOnly,
+      ['first-card only']: opcodes.FirstCardOnly,
+    }
+
+    if (ctx.locale != null) {
+      modes[translate('{{controlled}}', ctx.locale)] = opcodes.Controlled
+      modes[translate('{{normally open}}', ctx.locale)] = opcodes.NormallyOpen
+      modes[translate('{{normally closed}}', ctx.locale)] = opcodes.NormallyClosed
+      modes[translate('{{first-card only}}', ctx.locale)] = opcodes.FirstCardOnly
     }
 
     const weekday = (abbreviation) => {
@@ -1248,25 +1255,18 @@ module.exports = {
       sunday: weekday('sun'),
     }
 
-    return validate({ controller: id, firstcard: firstcard }, ctx.locale)
+    const fc = {
+      door: door,
+      start_time: firstcard.start_time,
+      end_time: firstcard.end_time,
+      active_mode: active_mode,
+      inactive_mode: inactive_mode,
+      weekdays: weekdays,
+    }
+
+    return validate({ controller: id, firstcard: fc }, ctx.locale)
       .then(() => initialise(ctx))
-      .then((context) => {
-        return get(
-          context,
-          id,
-          opcodes.SetFirstCard,
-          {
-            door: door,
-            start_time: firstcard.start_time,
-            end_time: firstcard.end_time,
-            active_mode: active_mode,
-            inactive_mode: inactive_mode,
-            weekdays: weekdays,
-          },
-          addr,
-          protocol,
-        )
-      })
+      .then((context) => get(context, id, opcodes.SetFirstCard, fc, addr, protocol))
       .then((response) => translate(response, ctx.locale))
   },
 

@@ -4,6 +4,58 @@ const expect = require('chai').expect
 const translate = require('../src/internationalisation.js').translate
 
 describe('internationalisation', function () {
+  // door control modes
+  describe('translate door control modes', function () {
+    it('default translation should translate door control modes to en-US', function () {
+      const tests = [
+        { object: { controlled: '{{controlled}}' }, expected: { controlled: 'controlled' } },
+        { object: { normallyOpen: '{{normally open}}' }, expected: { normallyOpen: 'normally open' } },
+        { object: { normallyClosed: '{{normally closed}}' }, expected: { normallyClosed: 'normally closed' } },
+        { object: { firstcardOnly: '{{first-card only}}' }, expected: { firstcardOnly: 'first-card only' } },
+      ]
+
+      for (const test of tests) {
+        const translated = translate(test.object)
+
+        expect(translated).to.deep.equal(test.expected)
+      }
+    })
+  })
+
+  describe('#translate(...)', function () {
+    it('en-US locale should translate door control modes to en-US', function () {
+      const tests = [
+        { object: { controlled: '{{controlled}}' }, expected: { controlled: 'controlled' } },
+        { object: { normallyOpen: '{{normally open}}' }, expected: { normallyOpen: 'normally open' } },
+        { object: { normallyClosed: '{{normally closed}}' }, expected: { normallyClosed: 'normally closed' } },
+        { object: { firstcardOnly: '{{first-card only}}' }, expected: { firstcardOnly: 'first-card only' } },
+      ]
+
+      for (const test of tests) {
+        const translated = translate(test.object, 'en-US')
+
+        expect(translated).to.deep.equal(test.expected)
+      }
+    })
+  })
+
+  describe('#translate(...)', function () {
+    it('klingon locale should translate door control modes to klingon', function () {
+      const tests = [
+        { object: { controlled: '{{controlled}}' }, expected: { controlled: 'SeH' } },
+        { object: { normallyOpen: '{{normally open}}' }, expected: { normallyOpen: 'roD poS' } },
+        { object: { normallyClosed: '{{normally closed}}' }, expected: { normallyClosed: 'motlh SoQ' } },
+        { object: { firstcardOnly: '{{first-card only}}' }, expected: { firstcardOnly: "wa'DIch chaw' neH" } },
+      ]
+
+      for (const test of tests) {
+        const translated = translate(test.object, 'klingon')
+
+        expect(translated).to.deep.equal(test.expected)
+      }
+    })
+  })
+
   // swipe
   describe('#translate(...)', function () {
     it('default translation should translate swipe event type to en-US', function () {

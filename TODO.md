@@ -1,14 +1,17 @@
 # TODO
 
-- [ ] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
+- [x] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
       - [x] API
       - [x] example
       - [x] integration tests
-      - [ ] internationalisation
-         - [ ] lookup door modes
+      - [x] internationalisation
+      - [x] lookup door modes
       - [x] jsdoc
       - [x] CHANGELOG
       - [x] README
+
+- [ ] replace eslint/prettier with oxc ?
+   - https://oxc.rs/
 
 ## TODO
 1. Device by name

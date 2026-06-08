@@ -8,7 +8,7 @@ const firstcard = {
   start_time: '08:30',
   end_time: '16:45',
   active_mode: 'normally open',
-  inactive_mode: 'firstcard only',
+  inactive_mode: 'first-card only',
   weekdays: ['Monday', 'Wednesday', 'Friday'],
 }
 
