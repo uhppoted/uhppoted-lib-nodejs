@@ -1245,15 +1245,6 @@ module.exports = {
 
     const active_mode = modes[firstcard.active_mode]
     const inactive_mode = modes[firstcard.inactive_mode]
-    const weekdays = {
-      monday: weekday('mon'),
-      tuesday: weekday('tue'),
-      wednesday: weekday('wed'),
-      thursday: weekday('thu'),
-      friday: weekday('fri'),
-      saturday: weekday('sat'),
-      sunday: weekday('sun'),
-    }
 
     const fc = {
       door: door,
@@ -1261,7 +1252,13 @@ module.exports = {
       end_time: firstcard.end_time,
       active_mode: active_mode,
       inactive_mode: inactive_mode,
-      weekdays: weekdays,
+      monday: weekday('mon'),
+      tuesday: weekday('tue'),
+      wednesday: weekday('wed'),
+      thursday: weekday('thu'),
+      friday: weekday('fri'),
+      saturday: weekday('sat'),
+      sunday: weekday('sun'),
     }
 
     return validate({ controller: id, firstcard: fc }, ctx.locale)

@@ -98,15 +98,13 @@ describe('encoder', function () {
       end_time: '17:45',
       active_mode: opcodes.NormallyOpen,
       inactive_mode: opcodes.FirstCardOnly,
-      weekdays: {
-        monday: true,
-        tuesday: true,
-        wednesday: false,
-        thursday: true,
-        friday: false,
-        saturday: false,
-        sunday: true,
-      },
+      monday: true,
+      tuesday: true,
+      wednesday: false,
+      thursday: true,
+      friday: false,
+      saturday: false,
+      sunday: true,
     }
 
     // prettier-ignore

@@ -22,6 +22,9 @@ update-release:
 	npm update	
 # 	npm audit fix
 
+generate:
+	cd .codegen && make generate
+
 format:
 	npx prettier --write src/*.js
 	npx prettier --write test/*.js

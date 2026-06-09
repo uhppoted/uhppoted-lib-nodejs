@@ -823,7 +823,13 @@ module.exports = {
    * @param {date}      end_date       Time (HH:mm) after which first-card is no longer active.
    * @param {mode}      active_mode    Door control mode after first-card swipe.
    * @param {mode}      inactive_mode  Door control mode when first-card is not active.
-   * @param {weekdays}  weekdays       List of weekdays on which first-card can be activated.
+   * @param {monday}    boolean        true if first-card can be activated on Monday.
+   * @param {tuesday}   boolean        true if first-card can be activated on Tuesday.
+   * @param {wednesday} boolean        true if first-card can be activated on Wednesday.
+   * @param {thursday}  boolean        true if first-card can be activated on Thursday.
+   * @param {friday}    boolean        true if first-card can be activated on Friday.
+   * @param {saturday}  boolean        true if first-card can be activated on Saturday.
+   * @param {sunday}    boolean        true if first-card can be activated on Sunday.
    *
    * @return {buffer} 64 byte NodeJS buffer with encoded set-firstcard request.
    */
@@ -834,7 +840,7 @@ module.exports = {
     const end_time = firstcard.end_time
     const active_mode = firstcard.active_mode
     const inactive_mode = firstcard.inactive_mode
-    const weekdays = firstcard.weekdays
+    // const weekdays = firstcard.weekdays
 
     const modes = {
       [opcodes.Controlled]: 0,
@@ -851,13 +857,13 @@ module.exports = {
       throw errors.InvalidDoorControlMode(inactive_mode)
     }
 
-    const monday = weekdays.monday ? 1 : 0
-    const tuesday = weekdays.tuesday ? 1 : 0
-    const wednesday = weekdays.wednesday ? 1 : 0
-    const thursday = weekdays.thursday ? 1 : 0
-    const friday = weekdays.friday ? 1 : 0
-    const saturday = weekdays.saturday ? 1 : 0
-    const sunday = weekdays.sunday ? 1 : 0
+    const monday = firstcard.monday ? 1 : 0
+    const tuesday = firstcard.tuesday ? 1 : 0
+    const wednesday = firstcard.wednesday ? 1 : 0
+    const thursday = firstcard.thursday ? 1 : 0
+    const friday = firstcard.friday ? 1 : 0
+    const saturday = firstcard.saturday ? 1 : 0
+    const sunday = firstcard.sunday ? 1 : 0
 
     const request = Buffer.alloc(64)
 
@@ -976,7 +982,7 @@ function date2bin(date) {
  */
 function HHmm2bin(hhmm) {
   const bytes = []
-  const re = /([0-9]{2}):([0-9]{2})/
+  const re = /([0-9]{1,2}):([0-9]{2})/
   const match = hhmm.match(re)
 
   for (const m of match.slice(1)) {
