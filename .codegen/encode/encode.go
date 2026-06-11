@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strings"
 	"text/template"
+	"unicode"
 
 	lib "github.com/uhppoted/uhppoted-codegen/model/types"
 
@@ -95,7 +96,7 @@ func transmogrify(requests []lib.Request) []test {
 			for _, a := range t.Args {
 				if a.Name != "controller" {
 					args = append(args, arg{
-						Name:  snakecase(a.Name),
+						Name:  camelCase(a.Name),
 						Value: value(a),
 					})
 				}
@@ -142,14 +143,24 @@ func packet(p []byte) []string {
 	}
 }
 
-func snakecase(s string) string {
-	tokens := regexp.MustCompile(`[ _\-:]+`).Split(strings.TrimSpace(s), -1)
+func camelCase(s string) string {
+	tokens := regexp.MustCompile(`[ \-:]+`).Split(s, -1)
 
-	for i, token := range tokens {
-		tokens[i] = strings.ToLower(strings.TrimSpace(token))
+	for i, token := range tokens[1:] {
+		tokens[i+1] = capitalize(token)
 	}
 
-	return strings.Join(tokens, "_")
+	return strings.Join(tokens, "")
+}
+
+func capitalize(s string) string {
+	runes := []rune(s)
+
+	if len(runes) > 0 {
+		runes[0] = unicode.ToUpper(runes[0])
+	}
+
+	return string(runes)
 }
 
 func hyphenate(s string) string {

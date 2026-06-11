@@ -50,9 +50,9 @@ function InvalidDoorControlMode(mode, locale) {
 }
 
 function InvalidFirstCard(firstcard, locale) {
-  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed].includes(firstcard.active_mode)) {
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed].includes(firstcard.activeMode)) {
     const mode = () => {
-      switch (firstcard.active_mode) {
+      switch (firstcard.activeMode) {
         case opcodes.NormallyOpen:
           return '{{normally open}}'
 
@@ -66,16 +66,16 @@ function InvalidFirstCard(firstcard, locale) {
           return '{{first-card only}}'
 
         default:
-          return `${firstcard.active_mode}`
+          return `${firstcard.activeMode}`
       }
     }
 
     return new Error(translate(`{{invalid firstcard active-mode}} (${mode()})`, locale))
   }
 
-  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed, opcodes.FirstCardOnly].includes(firstcard.inactive_mode)) {
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed, opcodes.FirstCardOnly].includes(firstcard.inactiveMode)) {
     const mode = () => {
-      switch (firstcard.active_mode) {
+      switch (firstcard.inactiveMode) {
         case opcodes.NormallyOpen:
           return '{{normally open}}'
 
@@ -89,7 +89,7 @@ function InvalidFirstCard(firstcard, locale) {
           return '{{first-card only}}'
 
         default:
-          return `${firstcard.active_mode}`
+          return `${firstcard.inactiveMode}`
       }
     }
 

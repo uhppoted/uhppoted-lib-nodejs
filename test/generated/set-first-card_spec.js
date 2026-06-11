@@ -12,10 +12,10 @@ describe('encode set-first-card', function () {
 
     const args = {
       door: 3,
-      start_time: "8:30",
-      end_time: "17:45",
-      active_mode: opcodes.NormallyOpen,
-      inactive_mode: opcodes.NormallyClosed,
+      startTime: "8:30",
+      endTime: "17:45",
+      activeMode: opcodes.NormallyOpen,
+      inactiveMode: opcodes.NormallyClosed,
       monday: true,
       tuesday: true,
       wednesday: false,
@@ -38,4 +38,3 @@ describe('encode set-first-card', function () {
     expect(request).to.deep.equal(expected)
   })
 })
-

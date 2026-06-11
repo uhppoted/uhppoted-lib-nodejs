@@ -46,10 +46,10 @@ describe('#setFirstCard(...)', function () {
 
     const door = 3
     const firstcard = {
-      start_time: '08:30',
-      end_time: '17:45',
-      active_mode: 'normally open',
-      inactive_mode: 'first-card only',
+      startTime: '08:30',
+      endTime: '17:45',
+      activeMode: 'normally open',
+      inactiveMode: 'first-card only',
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 
@@ -75,10 +75,10 @@ describe('#setFirstCard(...)', function () {
 
     const door = 3
     const firstcard = {
-      start_time: '08:30',
-      end_time: '17:45',
-      active_mode: 'roD poS',
-      inactive_mode: "wa'DIch chaw' neH",
+      startTime: '08:30',
+      endTime: '17:45',
+      activeMode: 'roD poS',
+      inactiveMode: "wa'DIch chaw' neH",
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 
@@ -117,10 +117,10 @@ describe('#setFirstCard(...) (TCP)', function () {
 
     const door = 3
     const firstcard = {
-      start_time: '08:30',
-      end_time: '17:45',
-      active_mode: 'normally open',
-      inactive_mode: 'first-card only',
+      startTime: '08:30',
+      endTime: '17:45',
+      activeMode: 'normally open',
+      inactiveMode: 'first-card only',
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 
@@ -142,10 +142,10 @@ describe('#setFirstCard(...) (TCP)', function () {
     const controller = { id: 405419896, address: '127.0.0.1:59998', protocol: 'tcp' }
     const door = 3
     const firstcard = {
-      start_time: '08:30',
-      end_time: '17:45',
-      active_mode: 'normally open',
-      inactive_mode: 'first-card only',
+      startTime: '08:30',
+      endTime: '17:45',
+      activeMode: 'normally open',
+      inactiveMode: 'first-card only',
       weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
     }
 

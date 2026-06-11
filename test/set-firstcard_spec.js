@@ -10,10 +10,10 @@ describe('set-firstcard', function () {
       const controller = 0
       const door = 3
       const firstcard = {
-        start_time: '08:30',
-        end_time: '17:45',
-        active_mode: 'normally open',
-        inactive_mode: 'first-card only',
+        startTime: '08:30',
+        endTime: '17:45',
+        activeMode: 'normally open',
+        inactiveMode: 'first-card only',
         weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
       }
 
@@ -31,10 +31,10 @@ describe('set-firstcard', function () {
       const controller = 0
       const door = 3
       const firstcard = {
-        start_time: '08:30',
-        end_time: '17:45',
-        active_mode: 'normally open',
-        inactive_mode: 'first-card only',
+        startTime: '08:30',
+        endTime: '17:45',
+        activeMode: 'normally open',
+        inactiveMode: 'first-card only',
         weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
       }
 
@@ -52,10 +52,10 @@ describe('set-firstcard', function () {
       const controller = 405419896
       const door = 3
       const firstcard = {
-        start_time: '08:30',
-        end_time: '17:45',
-        active_mode: 'first-card only',
-        inactive_mode: 'first-card only',
+        startTime: '08:30',
+        endTime: '17:45',
+        activeMode: 'first-card only',
+        inactiveMode: 'first-card only',
         weekdays: ['Monday', 'Tuesday', 'Thursday', 'Sunday'],
       }
 

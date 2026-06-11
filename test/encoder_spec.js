@@ -94,10 +94,10 @@ describe('encoder', function () {
     const controller = 405419896
     const firstcard = {
       door: 3,
-      start_time: '08:30',
-      end_time: '17:45',
-      active_mode: opcodes.NormallyOpen,
-      inactive_mode: opcodes.FirstCardOnly,
+      startTime: '08:30',
+      endTime: '17:45',
+      activeMode: opcodes.NormallyOpen,
+      inactiveMode: opcodes.FirstCardOnly,
       monday: true,
       tuesday: true,
       wednesday: false,

@@ -819,10 +819,10 @@ module.exports = {
    *
    * @param {number}    controller     Controller serial number.
    * @param {number}    door           Door ID ([1..4]).
-   * @param {date}      start_time     Time (HH:mm) from which first-card can be activated.
-   * @param {date}      end_date       Time (HH:mm) after which first-card is no longer active.
-   * @param {mode}      active_mode    Door control mode after first-card swipe.
-   * @param {mode}      inactive_mode  Door control mode when first-card is not active.
+   * @param {HHmm}      startTime      Time (HH:mm) from which first-card can be activated.
+   * @param {HHmm}      endTime        Time (HH:mm) after which first-card is no longer active.
+   * @param {mode}      activeMode     Door control mode after first-card swipe.
+   * @param {mode}      inactiveMode   Door control mode when first-card is not active.
    * @param {monday}    boolean        true if first-card can be activated on Monday.
    * @param {tuesday}   boolean        true if first-card can be activated on Tuesday.
    * @param {wednesday} boolean        true if first-card can be activated on Wednesday.
@@ -833,14 +833,12 @@ module.exports = {
    *
    * @return {buffer} 64 byte NodeJS buffer with encoded set-firstcard request.
    */
-  // SetFirstCard: function (controller, door, { start_time, end_time, active_mode, inactive_mode, weekdays }) {
   SetFirstCard: function (controller, firstcard) {
     const door = firstcard.door
-    const start_time = firstcard.start_time
-    const end_time = firstcard.end_time
-    const active_mode = firstcard.active_mode
-    const inactive_mode = firstcard.inactive_mode
-    // const weekdays = firstcard.weekdays
+    const startTime = firstcard.startTime
+    const endTime = firstcard.endTime
+    const activeMode = firstcard.activeMode
+    const inactiveMode = firstcard.inactiveMode
 
     const modes = {
       [opcodes.Controlled]: 0,
@@ -849,12 +847,12 @@ module.exports = {
       [opcodes.FirstCardOnly]: 3,
     }
 
-    if (!(active_mode in modes) || active_mode === opcodes.FirstCardOnly) {
-      throw errors.InvalidDoorControlMode(active_mode)
+    if (!(activeMode in modes) || activeMode === opcodes.FirstCardOnly) {
+      throw errors.InvalidDoorControlMode(activeMode)
     }
 
-    if (!(inactive_mode in modes)) {
-      throw errors.InvalidDoorControlMode(inactive_mode)
+    if (!(inactiveMode in modes)) {
+      throw errors.InvalidDoorControlMode(inactiveMode)
     }
 
     const monday = firstcard.monday ? 1 : 0
@@ -872,11 +870,11 @@ module.exports = {
     request.writeUInt32LE(controller, 4)
     request.writeUInt8(door, 8)
 
-    HHmm2bin(start_time).copy(request, 9)
-    request.writeUInt8(modes[active_mode], 11)
+    HHmm2bin(startTime).copy(request, 9)
+    request.writeUInt8(modes[activeMode], 11)
 
-    HHmm2bin(end_time).copy(request, 12)
-    request.writeUInt8(modes[inactive_mode], 14)
+    HHmm2bin(endTime).copy(request, 12)
+    request.writeUInt8(modes[inactiveMode], 14)
 
     request.writeUInt8(monday, 15)
     request.writeUInt8(tuesday, 16)

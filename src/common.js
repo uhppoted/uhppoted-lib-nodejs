@@ -214,11 +214,11 @@ function isValidTaskType(task) {
 }
 
 function isValidFirstCard(firstcard) {
-  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed].includes(firstcard.active_mode)) {
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed].includes(firstcard.activeMode)) {
     return false
   }
 
-  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed, opcodes.FirstCardOnly].includes(firstcard.inactive_mode)) {
+  if (![opcodes.Controlled, opcodes.NormallyOpen, opcodes.NormallyClosed, opcodes.FirstCardOnly].includes(firstcard.inactiveMode)) {
     return false
   }
 

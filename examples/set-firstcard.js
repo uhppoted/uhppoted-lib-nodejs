@@ -5,10 +5,10 @@ const controller = 405419896
 const addr = '192.168.1.125'
 const door = 3
 const firstcard = {
-  start_time: '08:30',
-  end_time: '16:45',
-  active_mode: 'normally open',
-  inactive_mode: 'first-card only',
+  startTime: '08:30',
+  endTime: '16:45',
+  activeMode: 'normally open',
+  inactiveMode: 'first-card only',
   weekdays: ['Monday', 'Wednesday', 'Friday'],
 }
 

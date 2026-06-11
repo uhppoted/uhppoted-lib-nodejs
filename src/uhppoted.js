@@ -1182,21 +1182,21 @@ module.exports = {
    *                                           'udp' unless 'tcp'.
    * @param {uint}        door        Door ID ([1..4]).
    *
-   * @param {object}      firstcard                First card configuration:
-   * @param {string}      firstcard.start_time     Time of day from which first-card mode can be activated (e.g. "08:30").
-   * @param {string}      firstcard.end_time       Time of day after which first-card mode is deactivated (e.g. "16:45").
-   * @param {string}      firstcard.active_mode    Door control mode after first-card swipe ("controlled", "normally open", or
-   *                                               "normally closed").
-   * @param {string}      firstcard.inactive_mode  Door control mode after first-card mode deactivated ("controlled", "normally open",
-   *                                               "normally closed" or "first-card only").
+   * @param {object}      firstcard               First card configuration:
+   * @param {string}      firstcard.startTime     Time of day from which first-card mode can be activated (e.g. "08:30").
+   * @param {string}      firstcard.endTime       Time of day after which first-card mode is deactivated (e.g. "16:45").
+   * @param {string}      firstcard.activeMode    Door control mode after first-card swipe ("controlled", "normally open", or
+   *                                              "normally closed").
+   * @param {string}      firstcard.inactiveMode  Door control mode after first-card mode deactivated ("controlled", "normally open",
+   *                                              "normally closed" or "first-card only").
    *
    * @example
    * uhppoted.setFirstCard(ctx, 405419896,
    *                            3,
-   *                            { start_time: "08:30",
-   *                              end_time: "16:45",
-   *                              active_mode: "controlled",
-   *                              inactive_mode: "first-card only",
+   *                            { startTime: "08:30",
+   *                              endTime: "16:45",
+   *                              activeMode: "controlled",
+   *                              inactiveMode: "first-card only",
    *                              weekdays: {
    *                                 monday: true,
    *                                 tuesday: true,
@@ -1213,10 +1213,10 @@ module.exports = {
    * @example
    * uhppoted.setFirstCard(ctx, { id:405419896, address:'192.168.1.100', protocol:'tcp'},
    *                            3,
-   *                            { start_time: '08:30',
-   *                              end_time: '16:45',
-   *                              active_mode: 'controlled',
-   *                              inactive_mode: 'firstc-ard only',
+   *                            { startTime: '08:30',
+   *                              endTime: '16:45',
+   *                              activeMode: 'controlled',
+   *                              inactiveMode: 'firstc-ard only',
    *                              weekdays: ['Monday', 'Tuesday', 'Friday']
    *                            })
    *  .then(response => { console.log(response) })
@@ -1243,15 +1243,15 @@ module.exports = {
       return (firstcard.weekdays ?? []).some((day) => day.trim().toLowerCase().startsWith(abbreviation))
     }
 
-    const active_mode = modes[firstcard.active_mode]
-    const inactive_mode = modes[firstcard.inactive_mode]
+    const activeMode = modes[firstcard.activeMode]
+    const inactiveMode = modes[firstcard.inactiveMode]
 
     const fc = {
       door: door,
-      start_time: firstcard.start_time,
-      end_time: firstcard.end_time,
-      active_mode: active_mode,
-      inactive_mode: inactive_mode,
+      startTime: firstcard.startTime,
+      endTime: firstcard.endTime,
+      activeMode: activeMode,
+      inactiveMode: inactiveMode,
       monday: weekday('mon'),
       tuesday: weekday('tue'),
       wednesday: weekday('wed'),
