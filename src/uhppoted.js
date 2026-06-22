@@ -1225,26 +1225,34 @@ module.exports = {
   setFirstCard: function (ctx, controller, door, firstcard) {
     const { id, address: addr, protocol } = resolve(controller)
 
-    const modes = {
-      ['controlled']: opcodes.Controlled,
-      ['normally open']: opcodes.NormallyOpen,
-      ['normally closed']: opcodes.NormallyClosed,
-      ['first-card only']: opcodes.FirstCardOnly,
-    }
+    const modes = new Map([
+      ['controlled', opcodes.Controlled],
+      ['normally open', opcodes.NormallyOpen],
+      ['normally closed', opcodes.NormallyClosed],
+      ['first-card only', opcodes.FirstCardOnly],
+    ])
 
     if (ctx.locale != null) {
-      modes[translate('{{controlled}}', ctx.locale)] = opcodes.Controlled
-      modes[translate('{{normally open}}', ctx.locale)] = opcodes.NormallyOpen
-      modes[translate('{{normally closed}}', ctx.locale)] = opcodes.NormallyClosed
-      modes[translate('{{first-card only}}', ctx.locale)] = opcodes.FirstCardOnly
+      modes.set(translate('{{controlled}}', ctx.locale), opcodes.Controlled)
+      modes.set(translate('{{normally open}}', ctx.locale), opcodes.NormallyOpen)
+      modes.set(translate('{{normally closed}}', ctx.locale), opcodes.NormallyClosed)
+      modes.set(translate('{{first-card only}}', ctx.locale), opcodes.FirstCardOnly)
+    }
+
+    const mode = (m) => {
+      if (!modes.has(m)) {
+        throw new Error(`invalid first-card mode (${m})`)
+      }
+
+      return modes.get(m)
     }
 
     const weekday = (abbreviation) => {
       return (firstcard.weekdays ?? []).some((day) => day.trim().toLowerCase().startsWith(abbreviation))
     }
 
-    const activeMode = modes[firstcard.activeMode]
-    const inactiveMode = modes[firstcard.inactiveMode]
+    const activeMode = mode(firstcard.activeMode)
+    const inactiveMode = mode(firstcard.inactiveMode)
 
     const fc = {
       door: door,

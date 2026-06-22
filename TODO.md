@@ -1,8 +1,6 @@
 # TODO
 
 - [x] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
-   - [x] fix snake_case stuff
-
 - [ ] codegen
 - [ ] replace eslint/prettier with oxc ?
    - https://oxc.rs/
