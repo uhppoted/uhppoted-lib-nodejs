@@ -7,7 +7,7 @@ NodeJS module that implements an API for interacting with a UHPPOTE TCP/IP Wiega
 #### Requirements:
 - `node.js` version 14.18.3+
 
-For the latest updates see the [CHANGELOG.md](https://github.com/uhppoted/uhppoted-lib-nodejs/blob/master/CHANGELOG.md)
+For the latest updates see the [CHANGELOG.md](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/blob/master/CHANGELOG.md)
 
 #### Installation
 
@@ -95,7 +95,7 @@ uhppoted.getDevice(ctx, 405419896)
   })
 ```
 
-A minimal example showing the usage for each API can be found in the [_examples_](https://github.com/uhppoted/uhppoted-lib-nodejs/tree/master/examples) folder. The _examples_ have `uhppoted` as a dependency - install either the published
+A minimal example showing the usage for each API can be found in the [_examples_](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/tree/master/examples) folder. The _examples_ have `uhppoted` as a dependency - install either the published
 `uhppoted` module in the examples folder:
 ```
 cd examples
@@ -470,7 +470,7 @@ Returns the card record at the index, e.g.:
 _Notes:_
 1. A card number of 0 is returned if the card at the index does not exist.
 2. A card number of 0xffffffff (4294967295) is returned if the card at the index has been deleted.
-   (e.g. [see examples/get-card-by-index.js](https://github.com/uhppoted/uhppoted-lib-nodejs/blob/main/examples/get-card-by-index.js))
+   (e.g. [see examples/get-card-by-index.js](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/blob/main/examples/get-card-by-index.js))
 
 
 #### `putCard`
@@ -992,8 +992,8 @@ Example `event` object:
 
 ### Issues and Feature Requests
 
-Please create an issue in the [uhppoted-nodejs](https://github.com/uhppoted/uhppoted-lib-nodejs) _github_ repository.
+Please create an issue in the [uhppoted-nodejs](https://codeberg.org/uhppoted/uhppoted-lib-nodejs) _github_ repository.
 
 ### License
 
-[MIT](https://github.com/uhppoted/uhppoted-lib-nodejs/blob/master/LICENSE)
+[MIT](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/blob/master/LICENSE)

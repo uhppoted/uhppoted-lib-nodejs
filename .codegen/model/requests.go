@@ -1,8 +1,8 @@
 package model
 
 import (
-	lib "github.com/uhppoted/uhppoted-codegen/model"
-	"github.com/uhppoted/uhppoted-codegen/model/types"
+	lib "codeberg.org/uhppoted/uhppoted-codegen/model"
+	"codeberg.org/uhppoted/uhppoted-codegen/model/types"
 )
 
 var Requests = []types.Request{

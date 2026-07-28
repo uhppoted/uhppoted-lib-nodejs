@@ -11,7 +11,7 @@ import (
 	"text/template"
 	"unicode"
 
-	lib "github.com/uhppoted/uhppoted-codegen/model/types"
+	lib "codeberg.org/uhppoted/uhppoted-codegen/model/types"
 
 	"codegen/codegen"
 	"codegen/model"

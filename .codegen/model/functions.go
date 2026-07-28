@@ -1,9 +1,9 @@
 package model
 
 import (
-	// lib "github.com/uhppoted/uhppoted-codegen/model"
+	// lib "codeberg.org/uhppoted/uhppoted-codegen/model"
 
-	"github.com/uhppoted/uhppoted-codegen/model/types"
+	"codeberg.org/uhppoted/uhppoted-codegen/model/types"
 )
 
 var API = []types.Function{

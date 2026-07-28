@@ -14,6 +14,10 @@ ARGS       = bind=$(BIND) broadcast=$(BROADCAST) listen=$(LISTEN) timeout=$(TIME
 .PHONY: build
 .PHONY: test
 
+push:
+	git push
+	git push bitbucket
+
 update:
 	npm update	
 # 	npm audit fix

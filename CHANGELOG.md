@@ -8,6 +8,7 @@
 ### Updated
 1. Updated dependencies for security patches.
 2. Retired support for end of life NodeJS versions.
+3. Migrated from _github.com/uhppoted/uhppoted-lib-nodejs_ to _codeberg.org/uhppoted/uhppoted-lib-nodejs_.
 
 
 ## [0.9.0](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-01-27

@@ -1,5 +1,6 @@
 # TODO
 
+- [x] Migrate to codeberg.org (cf. https://codeberg.org/uhppoted/uhppoted/issues/1)
 - [x] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
 - [ ] codegen
 - [ ] replace eslint/prettier with oxc ?
