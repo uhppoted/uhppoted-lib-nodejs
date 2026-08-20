@@ -140,20 +140,18 @@ module.exports = {
    * @param {object}   Decoded get-card-by-id response object
    */
   GetCardByID: function (bytes) {
-    const doors = {}
-    const offset = 20
+    const permission = (offset) => {
+      const v = uint8(bytes, 20 + offset)
 
-    ;['1', '2', '3', '4'].forEach((door, index) => {
-      const permission = uint8(bytes, offset + index)
-
-      if (permission === 0) {
-        doors[door] = false
-      } else if (permission === 1) {
-        doors[door] = true
-      } else if (permission >= 2 && permission <= 254) {
-        doors[door] = permission
+      if (v === 1) {
+        return true
+      } else if (v >= 2 && v <= 254) {
+        return v
       }
-    })
+      return false
+    }
+
+    const firstcard = bytes.getUint8(27, true)
 
     return {
       deviceId: uint32(bytes, 4),
@@ -163,8 +161,22 @@ module.exports = {
           from: yyyymmdd(bytes, 12),
           to: yyyymmdd(bytes, 16),
         },
-        doors,
+
+        doors: {
+          1: permission(0),
+          2: permission(1),
+          3: permission(2),
+          4: permission(3),
+        },
+
         PIN: uint24(bytes, 24),
+
+        firstcard: {
+          1: (firstcard & 0x01) === 0x01,
+          2: (firstcard & 0x02) === 0x02,
+          3: (firstcard & 0x04) === 0x04,
+          4: (firstcard & 0x08) === 0x08,
+        },
       },
     }
   },
@@ -177,20 +189,18 @@ module.exports = {
    * @param {object}   Decoded get-card-by-index response object
    */
   GetCardByIndex: function (bytes) {
-    const doors = {}
-    const offset = 20
+    const permission = (offset) => {
+      const v = uint8(bytes, 20 + offset)
 
-    ;['1', '2', '3', '4'].forEach((door, index) => {
-      const permission = uint8(bytes, offset + index)
-
-      if (permission === 0) {
-        doors[door] = false
-      } else if (permission === 1) {
-        doors[door] = true
-      } else if (permission >= 2 && permission <= 254) {
-        doors[door] = permission
+      if (v === 1) {
+        return true
+      } else if (v >= 2 && v <= 254) {
+        return v
       }
-    })
+      return false
+    }
+
+    const firstcard = bytes.getUint8(27, true)
 
     return {
       deviceId: uint32(bytes, 4),
@@ -200,8 +210,22 @@ module.exports = {
           from: yyyymmdd(bytes, 12),
           to: yyyymmdd(bytes, 16),
         },
-        doors,
+
+        doors: {
+          1: permission(0),
+          2: permission(1),
+          3: permission(2),
+          4: permission(3),
+        },
+
         PIN: uint24(bytes, 24),
+
+        firstcard: {
+          1: (firstcard & 0x01) === 0x01,
+          2: (firstcard & 0x02) === 0x02,
+          3: (firstcard & 0x04) === 0x04,
+          4: (firstcard & 0x08) === 0x08,
+        },
       },
     }
   },

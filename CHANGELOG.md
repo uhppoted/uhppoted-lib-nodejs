@@ -4,6 +4,7 @@
 
 ### Added
 1. `set-firstcard` API function to configure first-card mode for a controller managed door.
+2. Added _first-card privileges_ to the `getCard`, `getCardByIndex1 and `putCard` APIs.
 
 ### Updated
 1. Updated dependencies for security patches.

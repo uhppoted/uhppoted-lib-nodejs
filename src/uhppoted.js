@@ -478,6 +478,7 @@ module.exports = {
    * @param {object} doors       map of doors and associated access permissions. A permission
    *                             may be true, false or a time profile in the range [2..254].
    * @param {uint}   PIN         Optional card keypad PIN code (in the range [0..999999])
+   * @param {object} firstcard   Optional object mapping door numbers 1..4 to first-card privilege (true/false).
    *
    * @example
    * uhppoted.putCard(ctx, 405419896, 8165538, '2021-01-01', '2021-12-31', { 1: true, 2: false, 3: 29, 4: true }, 7531)
@@ -489,12 +490,14 @@ module.exports = {
    *  .then(response => { console.log(response) })
    *  .catch(err => { console.log(`${err.message}`)
    */
-  putCard: function (ctx, controller, card, validFrom, validUntil, doors, PIN) {
+  putCard: function (ctx, controller, card, validFrom, validUntil, doors, PIN, firstcard) {
     const { id, address: addr, protocol } = resolve(controller)
 
     return validate({ controller: id, cardNumber: card, doors }, ctx.locale)
       .then(() => initialise(ctx))
-      .then((context) => set(context, id, opcodes.PutCard, { card, from: validFrom, to: validUntil, doors, PIN }, addr, protocol))
+      .then((context) =>
+        set(context, id, opcodes.PutCard, { card, from: validFrom, to: validUntil, doors, PIN, firstcard }, addr, protocol),
+      )
       .then((response) => translate(response, ctx.locale))
   },
 

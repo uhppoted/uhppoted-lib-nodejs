@@ -3,7 +3,7 @@ const ctx = require('./common.js')
 
 const deviceID = 405419896
 const addr = '192.168.1.125'
-const card = 8165538
+const card = 10058400
 
 async function run() {
   await uhppoted

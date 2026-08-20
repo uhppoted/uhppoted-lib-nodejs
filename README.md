@@ -437,9 +437,22 @@ Returns the card record for the card number, e.g.:
   deviceId: 405419896,
   card: {
     number: 10058400,
-    valid: { from: '2023-01-01', to: '2023-12-31' },
-    doors: { '1': true, '2': false, '3': false, '4': true }
-    PIN: 0
+    valid: { 
+      from: '2026-01-01',
+      to: '2026-12-31' },
+    doors: { 
+      '1': true,
+      '2': false,
+      '3': false,
+      '4': true,
+    }
+    PIN: 0,
+    firstcard: { 
+      '1': true,
+      '2': false,
+      '3': false,
+      '4': true,
+    }    
   }
 }
 ```
@@ -460,9 +473,22 @@ Returns the card record at the index, e.g.:
   deviceId: 405419896,
   card: {
     number: 10058400,
-    valid: { from: '2023-01-01', to: '2023-12-31' },
-    doors: { '1': false, '2': false, '3': false, '4': false },
-    PIN: 0
+    valid: { 
+      from: '2026-01-01',
+      to: '2026-12-31' },
+    doors: {
+      '1': false,
+      '2': false,
+      '3': false,
+      '4': false,
+    },
+    PIN: 0,
+    firstcard: { 
+      '1': false,
+      '2': true,
+      '3': true,
+      '4': false,
+    }    
   }
 }
 ```
@@ -486,6 +512,9 @@ uhppoted.putCard (ctx, controller, cardNumber, validFrom, validUntil, doors)
 - `validUntil`: date after which which card is no longer valid (YYYY-mm-dd)
 - `doors`: map of doors to access permissions for the card e.g. _{ 1: true, 2: false, 3: 29, 4: true }_. A
 permission may be `true`, `false` or a time profile in the range [2..254].
+- `PIN`: optional reader keypad PIN ([0..999999])
+- `firstcard`: optional map of doors to first-card privileges for the card e.g. _{ 1: true, 2: false, 3: true, 4: true }_. A
+first-card privilege may be `true` or `false`.
 
 Returns a `stored` result object, e.g.:
 ```
