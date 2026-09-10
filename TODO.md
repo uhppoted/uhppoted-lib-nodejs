@@ -5,6 +5,8 @@
 - [x] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
 - [x] add first-card privilege to `get-card` and `put-card` (cf. https://codeberg.org/uhppoted/uhppoted/issues/3)
 - [ ] Implement retry on UDP/TCP connect-to-self (cf. https://codeberg.org/uhppoted/uhppoted/issues/4)
+    - [x] udp
+    - [ ] tcp
 
 
 ## To Be Done
@@ -19,34 +21,3 @@
 1. `workflow_dispatch` is broken in _github_ workflows when the workflows are in multiple
     branches (https://github.community/t/workflow-dispatch-workflow-not-showing-in-actions-tab/130088/27)
 
-
-```
-const dgram = require('dgram');
-
-const connect = () => {
-  return new Promise((resolve, reject) => {
-    const sock = dgram.createSocket('udp4');
-    
-    sock.bind(1234, () => {
-      resolve(sock);
-    });
-    
-    sock.on('error', (err) => {
-      reject(err);
-    });
-  });
-};
-
-const sendData = async () => {
-  try {
-    const sock = await connect();
-    console.log('..... wooooooot', sock);
-    
-    // Perform your send operations here using 'sock'
-  } catch (err) {
-    console.error('Connection failed:', err);
-  }
-};
-
-sendData();
-```

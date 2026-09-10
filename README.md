@@ -1,4 +1,4 @@
-![build](https://github.com/uhppoted/uhppoted-lib-nodejs/workflows/build/badge.svg)
+![build](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/twystd/2609d9356470acaf904386ce4a74f54e/raw/uhppoted-lib-nodejs.json)
 ![NPM version](https://badge.fury.io/js/uhppoted.svg)
 ![NPM](https://img.shields.io/npm/l/uhppoted)
 
@@ -19,7 +19,7 @@ npm install uhppoted
 
 #### Current Release
 
-**[v0.9.0](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-01-27**
+**[v0.9.0](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-01-27**
 
 1. Updated dependencies for security patches.
 
@@ -1021,7 +1021,7 @@ Example `event` object:
 
 ### Issues and Feature Requests
 
-Please create an issue in the [uhppoted-nodejs](https://codeberg.org/uhppoted/uhppoted-lib-nodejs) _github_ repository.
+Please create an issue in the [uhppoted-nodejs](https://codeberg.org/uhppoted/uhppoted-lib-nodejs) _codeberg.org_ repository.
 
 ### License
 
