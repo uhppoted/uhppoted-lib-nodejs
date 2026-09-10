@@ -1,3 +1,5 @@
+/* global setImmediate */
+
 /**
  * Implements the functions required to send and receive UHPPOTE controller messages.
  *
@@ -223,25 +225,63 @@ module.exports = {
  * @return {object}  Decoded reply from access controller
  */
 async function udp(ctx, op, request, receive) {
-  const sock = dgram.createSocket(opts)
   const rq = codec.encode(op, ctx.deviceId, request)
+  const sockets = []
 
-  const onerror = new Promise((resolve, reject) => {
-    sock.on('error', (err) => {
-      reject(err)
+  // send-to-self
+  //
+  // If the bind port is 0, retries (up to 5 times) until the OS binds to a port that is not the
+  // destination port. The interim sockets are retained to prevent the OS from reusing the invalid
+  // port, which it will happily do if the socket is closed immediately (hence the defer())
+  const connect = () => {
+    return new Promise((resolve, reject) => {
+      let retries = 0
+
+      const f = () => {
+        retries++
+
+        const sock = dgram.createSocket(opts)
+
+        sockets.push(sock)
+
+        sock.on('error', (err) => {
+          reject(err)
+        })
+
+        sock.on('listening', () => {
+          const bindAddr = sock.address()
+
+          if (bindAddr.port === ctx.addr.port && ctx.addr.port !== 0) {
+            reject(new Error(`UDP bind address:port ${bindAddr.port} reserved for broadcast`))
+          } else if (bindAddr.port === ctx.addr.port && retries >= 5) {
+            reject(new Error(`OS bound UDP socket to port ${bindAddr.port} reserved for broadcast`))
+          } else if (bindAddr.port === ctx.addr.port) {
+            setImmediate(f)
+          } else {
+            resolve(sock)
+          }
+        })
+
+        sock.bind(0)
+      }
+
+      f()
     })
-  })
+  }
 
-  const send = new Promise((resolve, reject) => {
-    sock.on('listening', () => {
+  const send = connect().then((sock) => {
+    return new Promise((resolve, reject) => {
+      sock.on('error', (err) => {
+        reject(err)
+      })
+
+      sock.on('message', (message, rinfo) => {
+        log(ctx.debug, 'received', message, rinfo)
+
+        receive.received(new Uint8Array(message))
+      })
+
       if (ctx.forceBroadcast || isBroadcast(ctx.addr.address)) {
-        const bindAddr = sock.address()
-
-        // ... avoid broadcast-to-self
-        if (bindAddr.port === ctx.addr.port) {
-          reject(new Error(`invalid UDP bind address: port ${bindAddr.port} reserved for broadcast`))
-        }
-
         sock.setBroadcast(true)
       }
 
@@ -254,27 +294,23 @@ async function udp(ctx, op, request, receive) {
         }
       })
     })
-
-    sock.bind({
-      address: ctx.bind,
-      port: 0,
-    })
-  })
-
-  sock.on('message', (message, rinfo) => {
-    log(ctx.debug, 'received', message, rinfo)
-
-    receive.received(new Uint8Array(message))
   })
 
   try {
-    const result = await Promise.race([onerror, Promise.all([receive, send])])
+    const result = await Promise.all([receive, send])
 
     if (result && result.length === 2) {
       return result[0]
     }
   } finally {
-    sock.close()
+    for (const sock of sockets) {
+      try {
+        sock.close()
+      } catch (err) {
+        console.error(`WARN: error closing socket (${err})`)
+      }
+    }
+
     receive.cancel()
   }
 
