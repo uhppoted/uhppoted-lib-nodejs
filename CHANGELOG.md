@@ -6,6 +6,7 @@
 1. `set-firstcard` API function to configure first-card mode for a controller managed door.
 2. Added _first-card privileges_ to the `getCard`, `getCardByIndex1 and `putCard` APIs.
 3. Added retry when ephemeral UDP port collides with broadcast port.
+4. Added retry when ephemeral TCP port collides with destination port.
 
 ### Updated
 1. Updated dependencies for security patches.
