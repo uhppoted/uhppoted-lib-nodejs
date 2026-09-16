@@ -19,9 +19,15 @@ npm install uhppoted
 
 #### Current Release
 
-**[v0.9.0](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-01-27**
+## [0.9.1](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-09-16
 
-1. Updated dependencies for security patches.
+1. Migrated from _github.com/uhppoted/uhppoted-lib-nodejs_ to _codeberg.org/uhppoted/uhppoted-lib-nodejs_.
+2. Added `set-firstcard` API function to configure first-card mode for a controller managed door.
+3. Added _first-card privileges_ to the `getCard`, `getCardByIndex1 and `putCard` APIs.
+4. Implemented retry when ephemeral UDP port collides with broadcast port.
+5. Implemented retry when ephemeral TCP port collides with destination port.
+6. Retired support for end of life NodeJS versions.
+7. Updated dependencies for security patches.
 
 
 ### API

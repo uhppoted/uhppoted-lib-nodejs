@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## [0.9.1](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-09-16
 
 ### Added
 1. `set-firstcard` API function to configure first-card mode for a controller managed door.
@@ -9,9 +9,9 @@
 4. Added retry when ephemeral TCP port collides with destination port.
 
 ### Updated
-1. Updated dependencies for security patches.
+1. Migrated from _github.com/uhppoted/uhppoted-lib-nodejs_ to _codeberg.org/uhppoted/uhppoted-lib-nodejs_.
 2. Retired support for end of life NodeJS versions.
-3. Migrated from _github.com/uhppoted/uhppoted-lib-nodejs_ to _codeberg.org/uhppoted/uhppoted-lib-nodejs_.
+3. Updated dependencies for security patches.
 
 
 ## [0.9.0](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-01-27

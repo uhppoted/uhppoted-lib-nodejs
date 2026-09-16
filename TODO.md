@@ -4,12 +4,7 @@
 - [x] Migrate to codeberg.org (cf. https://codeberg.org/uhppoted/uhppoted/issues/1)
 - [x] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
 - [x] add first-card privilege to `get-card` and `put-card` (cf. https://codeberg.org/uhppoted/uhppoted/issues/3)
-- [ ] Implement retry on UDP/TCP connect-to-self (cf. https://codeberg.org/uhppoted/uhppoted/issues/4)
-    - [x] udp
-    - [x] tcp
-    - [x] CHANGELOG
-    - [x] README
-    - [ ] test on VPS
+- [x] Implement retry on UDP/TCP connect-to-self (cf. https://codeberg.org/uhppoted/uhppoted/issues/4)
 
 
 ## To Be Done
