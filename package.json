@@ -1,12 +1,12 @@
 {
   "name": "uhppoted",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "NodeJS module wrapper for the interface to UHPPOTE TCP/IP Wiegand Access Controllers",
   "author": "uhppoted",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://codeberg.org/uhppoted/uhppoted-lib-nodejs.git"
+    "url": "https://codeberg.org/uhppoted/uhppoted-lib-nodejs.git"
   },
   "bugs": {
     "url": "https://codeberg.org/uhppoted/uhppoted-lib-nodejs/issues"

@@ -7,7 +7,7 @@ NodeJS module that implements an API for interacting with a UHPPOTE TCP/IP Wiega
 #### Requirements:
 - `node.js` version 14.18.3+
 
-For the latest updates see the [CHANGELOG.md](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/blob/master/CHANGELOG.md)
+For the latest updates see the [CHANGELOG.md](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/src/branch/main/CHANGELOG.md)
 
 #### Installation
 

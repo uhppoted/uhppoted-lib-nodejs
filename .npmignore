@@ -6,5 +6,9 @@ test
 jsdoc
 TODO.md
 .eslintrc.js                  
-.github/workflows/node-js.yml 
+.github
+.codegen
+.prettierignore
+.prettierrc
+*.tgz
 release-notes.md
