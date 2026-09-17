@@ -354,8 +354,20 @@ async function tcp(ctx, dest, op, request, receive) {
         } else if (bindAddr.port === dest.port && retries >= 5) {
           reject(new Error(`OS bound TCP socket to port ${bindAddr.port} reserved for controllers`))
         } else if (bindAddr.port === dest.port) {
+          // NTS: close the write side only to signal the other side nothing is coming its way (otherwise you get
+          //      weird timeout issues while it waits for a request that it is never going to get).
+          //
+          //      Do NOT close here otherwise OS will potentially assign it again and we don't want that.
+          sock.end()
+
           setImmediate(connect)
         } else {
+          sock.on('data', (message) => {
+            log(ctx.debug, 'TCP::received', message)
+
+            receive.received(new Uint8Array(message))
+          })
+
           sock.write(new Uint8Array(rq), (err) => {
             if (err) {
               reject(err)
@@ -368,12 +380,6 @@ async function tcp(ctx, dest, op, request, receive) {
       })
 
       sock.connect(dest)
-
-      sock.on('data', (message) => {
-        log(ctx.debug, 'TCP::received', message)
-
-        receive.received(new Uint8Array(message))
-      })
     }
 
     connect()
