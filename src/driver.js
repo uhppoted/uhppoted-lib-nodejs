@@ -226,6 +226,7 @@ module.exports = {
  */
 async function udp(ctx, op, request, receive) {
   const rq = codec.encode(op, ctx.deviceId, request)
+  const bindAddrPort = stringToIP(ctx.bind, 0)
   const sockets = []
 
   const send = new Promise((resolve, reject) => {
@@ -243,21 +244,21 @@ async function udp(ctx, op, request, receive) {
       })
 
       sock.on('listening', () => {
-        const bindAddr = sock.address()
+        const boundAddr = sock.address()
 
         // send-to-self
         //
         // If the bind port is 0, retries (up to 5 times) until the OS binds to a port that is not the
         // destination port. The interim sockets are retained to prevent the OS from reusing the invalid
-        // port, which it will happily do if the socket is closed immediately (hence the defer())
+        // port, which it will happily do if the socket is closed immediately (hence the deferred close).
         //
         // It should really match on both address and port but multiple network cards, etc make it complicated
         // and fragile.
-        if (bindAddr.port === ctx.addr.port && ctx.addr.port !== 0) {
-          reject(new Error(`UDP bind address:port ${bindAddr.port} reserved for broadcast`))
-        } else if (bindAddr.port === ctx.addr.port && retries >= 5) {
-          reject(new Error(`OS bound UDP socket to port ${bindAddr.port} reserved for broadcast`))
-        } else if (bindAddr.port === ctx.addr.port) {
+        if (boundAddr.port === ctx.addr.port && bindAddrPort.port !== 0) {
+          reject(new Error(`UDP bind address:port ${boundAddr.port} reserved for broadcast`))
+        } else if (boundAddr.port === ctx.addr.port && retries >= 5) {
+          reject(new Error(`OS bound UDP socket to port ${boundAddr.port} reserved for broadcast`))
+        } else if (boundAddr.port === ctx.addr.port) {
           setImmediate(bind)
         } else {
           sock.on('message', (message, rinfo) => {
@@ -322,6 +323,7 @@ async function udp(ctx, op, request, receive) {
  */
 async function tcp(ctx, dest, op, request, receive) {
   const rq = codec.encode(op, ctx.deviceId, request)
+  const bindAddrPort = stringToIP(ctx.bind, 0)
   const sockets = []
 
   const send = new Promise((resolve, reject) => {
@@ -339,21 +341,25 @@ async function tcp(ctx, dest, op, request, receive) {
       })
 
       sock.on('connect', () => {
-        const bindAddr = sock.address()
+        const boundAddr = sock.address()
 
         // send-to-self
         //
         // If the bind port is 0, retries (up to 5 times) until the OS binds to a port that is not the
         // destination port. The interim sockets are retained to prevent the OS from reusing the invalid
-        // port, which it will happily do if the socket is closed immediately (hence the defer())
+        // port, which it will happily do if the socket is closed immediately (hence the deferred close).
         //
         // It should really match on both address and port but multiple network cards, etc make it complicated
         // and fragile.
-        if (bindAddr.port === dest.port && ctx.addr.port !== 0) {
-          reject(new Error(`TCP bind address:port ${bindAddr.port} reserved for controllers`))
-        } else if (bindAddr.port === dest.port && retries >= 5) {
-          reject(new Error(`OS bound TCP socket to port ${bindAddr.port} reserved for controllers`))
-        } else if (bindAddr.port === dest.port) {
+        //
+        // Unfortunately, NodeJS doesn't provide a separate bind/connect and BoundSocket (which would obviate
+        // the need for establishing a connection) is only available from v26.4.0+. Fortunately this edge case
+        // is fairly rare.
+        if (boundAddr.port === dest.port && bindAddrPort.port !== 0) {
+          reject(new Error(`TCP bind address:port ${boundAddr.port} reserved for controllers`))
+        } else if (boundAddr.port === dest.port && retries >= 5) {
+          reject(new Error(`OS bound TCP socket to port ${boundAddr.port} reserved for controllers`))
+        } else if (boundAddr.port === dest.port) {
           // NTS: close the write side only to signal the other side nothing is coming its way (otherwise you get
           //      weird timeout issues while it waits for a request that it is never going to get).
           //
@@ -516,9 +522,8 @@ function format(message, pad) {
  *
  * @returns {object} Object containing IP address and port as properties
  */
-function stringToIP(addr) {
+function stringToIP(addr, port = 60000) {
   let address = addr
-  let port = 60000
 
   const re = /^(.*?)(?::([0-9]+))?$/
   const match = addr.match(re)

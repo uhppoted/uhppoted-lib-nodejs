@@ -69,7 +69,8 @@ publish-npm: release
 debug: build
 # 	npx mocha 'integration-tests/set-firstcard_spec.js' --broadcast='192.168.1.255:59999' --listen='192.168.1.125:60001'
 # 	node examples/get-devices.js bind=$(BIND) broadcast=$(BROADCAST)
-	npx mocha test/internationalisation_spec.js
+# 	npx mocha test/internationalisation_spec.js
+	node examples/get-device.js $(ARGS)
 
 error-handling: build
 	node examples/error-handling.js $(ARGS)
