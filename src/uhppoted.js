@@ -3,11 +3,11 @@
  * @module uhppoted
  */
 
-const broadcast = require('./driver.js').broadcast
-const get = require('./driver.js').get
-const set = require('./driver.js').set
-const send = require('./driver.js').send
-const listen = require('./driver.js').listen
+const broadcast = require('./net.js').broadcast
+const get = require('./net.js').get
+const set = require('./net.js').set
+const send = require('./net.js').send
+const listen = require('./net.js').listen
 const opcodes = require('./opcodes.js')
 const errors = require('./errors.js')
 const translate = require('./internationalisation.js').translate

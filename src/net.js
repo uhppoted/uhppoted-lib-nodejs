@@ -3,7 +3,7 @@
 /**
  * Implements the functions required to send and receive UHPPOTE controller messages.
  *
- * @module driver
+ * @module net
  * @private
  */
 
@@ -226,7 +226,7 @@ module.exports = {
  */
 async function udp(ctx, op, request, receive) {
   const rq = codec.encode(op, ctx.deviceId, request)
-  const bindAddrPort = stringToIP(ctx.bind, 0)
+  const bindAddr = stringToIP(ctx.bind, 0)
   const sockets = []
 
   const send = new Promise((resolve, reject) => {
@@ -244,7 +244,7 @@ async function udp(ctx, op, request, receive) {
       })
 
       sock.on('listening', () => {
-        const boundAddr = sock.address()
+        const bound = sock.address()
 
         // send-to-self
         //
@@ -254,11 +254,11 @@ async function udp(ctx, op, request, receive) {
         //
         // It should really match on both address and port but multiple network cards, etc make it complicated
         // and fragile.
-        if (boundAddr.port === ctx.addr.port && bindAddrPort.port !== 0) {
-          reject(new Error(`UDP bind address:port ${boundAddr.port} reserved for broadcast`))
-        } else if (boundAddr.port === ctx.addr.port && retries >= 5) {
-          reject(new Error(`OS bound UDP socket to port ${boundAddr.port} reserved for broadcast`))
-        } else if (boundAddr.port === ctx.addr.port) {
+        if (bound.port === ctx.addr.port && bindAddr.port !== 0) {
+          reject(new Error(`UDP bind address:port ${bound.port} reserved for broadcast`))
+        } else if (bound.port === ctx.addr.port && retries >= 5) {
+          reject(new Error(`OS bound UDP socket to port ${bound.port} reserved for broadcast`))
+        } else if (bound.port === ctx.addr.port) {
           setImmediate(bind)
         } else {
           sock.on('message', (message, rinfo) => {
@@ -282,7 +282,10 @@ async function udp(ctx, op, request, receive) {
         }
       })
 
-      sock.bind(0)
+      sock.bind({
+        address: bindAddr.address,
+        port: bindAddr.port,
+      })
     }
 
     bind()
@@ -323,7 +326,7 @@ async function udp(ctx, op, request, receive) {
  */
 async function tcp(ctx, dest, op, request, receive) {
   const rq = codec.encode(op, ctx.deviceId, request)
-  const bindAddrPort = stringToIP(ctx.bind, 0)
+  const bindAddr = stringToIP(ctx.bind, 0)
   const sockets = []
 
   const send = new Promise((resolve, reject) => {
@@ -341,7 +344,7 @@ async function tcp(ctx, dest, op, request, receive) {
       })
 
       sock.on('connect', () => {
-        const boundAddr = sock.address()
+        const bound = sock.address()
 
         // send-to-self
         //
@@ -355,11 +358,11 @@ async function tcp(ctx, dest, op, request, receive) {
         // Unfortunately, NodeJS doesn't provide a separate bind/connect and BoundSocket (which would obviate
         // the need for establishing a connection) is only available from v26.4.0+. Fortunately this edge case
         // is fairly rare.
-        if (boundAddr.port === dest.port && bindAddrPort.port !== 0) {
-          reject(new Error(`TCP bind address:port ${boundAddr.port} reserved for controllers`))
-        } else if (boundAddr.port === dest.port && retries >= 5) {
-          reject(new Error(`OS bound TCP socket to port ${boundAddr.port} reserved for controllers`))
-        } else if (boundAddr.port === dest.port) {
+        if (bound.port === dest.port && bindAddr.port !== 0) {
+          reject(new Error(`TCP bind address:port ${bound.port} reserved for controllers`))
+        } else if (bound.port === dest.port && retries >= 5) {
+          reject(new Error(`OS bound TCP socket to port ${bound.port} reserved for controllers`))
+        } else if (bound.port === dest.port) {
           // NTS: close the write side only to signal the other side nothing is coming its way (otherwise you get
           //      weird timeout issues while it waits for a request that it is never going to get).
           //
