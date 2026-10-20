@@ -6,7 +6,7 @@
 1. Cleaned up TCP transport logic.
 
 
-## [0.9.1](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-09-16
+## [0.9.1](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-09-16
 
 ### Added
 1. `set-firstcard` API function to configure first-card mode for a controller managed door.
