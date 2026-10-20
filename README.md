@@ -1,6 +1,7 @@
-![build](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/twystd/2609d9356470acaf904386ce4a74f54e/raw/uhppoted-lib-nodejs.json)
+![build](https://github.com/uhppoted/uhppoted-lib-nodejs/workflows/build/badge.svg)
 ![NPM version](https://badge.fury.io/js/uhppoted.svg)
 ![NPM](https://img.shields.io/npm/l/uhppoted)
+
 
 NodeJS module that implements an API for interacting with a UHPPOTE TCP/IP Wiegand access controller board. The API supports device and card management as well as handling for events.
 
@@ -19,7 +20,7 @@ npm install uhppoted
 
 #### Current Release
 
-## [0.9.1](https://github.com/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-09-16
+## [0.9.1](https://codeberg.org/uhppoted/uhppoted-lib-nodejs/releases/tag/v0.9.0) - 2026-09-16
 
 1. Migrated from _github.com/uhppoted/uhppoted-lib-nodejs_ to _codeberg.org/uhppoted/uhppoted-lib-nodejs_.
 2. Added `set-firstcard` API function to configure first-card mode for a controller managed door.
